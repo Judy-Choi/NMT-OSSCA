@@ -220,7 +220,7 @@ if st.session_state.show_progress_view:
                         st.session_state[f"edited_chunk_{i}"] = final_chunk
 
             st.session_state.translation_done = True
-            st.success("🎉 번역이 완료되었습니다! 잠시 후 편집 모드로 전환됩니다.")
+            st.success("🎉 번역이 완료되었습니다! 잠시 후 수정 모드로 전환됩니다.")
             import time
             time.sleep(2)
             st.rerun()
@@ -237,7 +237,7 @@ if st.session_state.translation_done:
         glossary_data = load_glossary(glossary_path)
         source_terms, target_terms = get_glossary_terms(glossary_data)
 
-        # 각 청크의 편집 상태 초기화
+        # 각 청크의 수정 상태 초기화
         for i in range(len(source_chunks)):
             if f"editing_chunk_{i}" not in st.session_state:
                 st.session_state[f"editing_chunk_{i}"] = False
@@ -261,19 +261,19 @@ if st.session_state.translation_done:
                     st.markdown("### 번역 결과")
 
                 if is_editing:
-                    # 편집 모드
+                    # 수정 모드
                     with button_col:
                         if st.button("완료", key=f"done_button_{i}", use_container_width=True):
-                            # 편집된 내용을 저장하고 편집 모드 종료
+                            # 수정된 내용을 저장하고 수정 모드 종료
                             edited_content = st.session_state.get(f"temp_edit_{i}", "")
                             st.session_state[f"edited_chunk_{i}"] = edited_content
                             st.session_state[f"editing_chunk_{i}"] = False
-                            # 임시 편집 키 삭제
+                            # 임시 수정 키 삭제
                             if f"temp_edit_{i}" in st.session_state:
                                 del st.session_state[f"temp_edit_{i}"]
                             st.rerun()
                     
-                    # 편집용 임시 키 초기화 (편집 모드 시작 시에만)
+                    # 수정용 임시 키 초기화 (수정 모드 시작 시에만)
                     if f"temp_edit_{i}" not in st.session_state:
                         st.session_state[f"temp_edit_{i}"] = st.session_state.get(f"edited_chunk_{i}", "")
                     
@@ -289,7 +289,7 @@ if st.session_state.translation_done:
                 else:
                     # 읽기 전용 모드
                     with button_col:
-                        if st.button("편집", key=f"edit_button_{i}", use_container_width=True):
+                        if st.button("수정", key=f"edit_button_{i}", use_container_width=True):
                             st.session_state[f"editing_chunk_{i}"] = True
                             st.rerun()
 
