@@ -1,0 +1,8 @@
+.DS_Store
+.env
+__pycache__/
+*.py[cod]
+.vscode/
+.venv/
+glossary/
+prompts/
