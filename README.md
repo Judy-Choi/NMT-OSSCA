@@ -56,8 +56,12 @@ streamlit run translator.py
 - 원본 문서: `source_docs/models.md`
 - 프롬프트: `prompts/nmt.yaml`
 - 용어 사전(glossary) : `glossary/glossary.json`
-- 기계번역 결과 저장 파일: `./mt/models_ko.md`
-- 기계번역 사후교정 저장 파일: `./mtpe/models_ko.md`
+
+- 기계번역 결과 파일: `./mt/models_ko.md`
+  - 기계번역 사후교정 파일이 없고, 기계번역 결과 파일이 이미 존재하는 경우 번역하지 않고 저장된 파일을 불러옵니다. (다음 단계인 사후교정 가능)
+
+- 기계번역 사후교정 파일: `./mtpe/models_ko.md`
+  - 파일이 이미 존재하는 경우 번역하지 않고 저장된 파일을 불러옵니다. (이어서 사후교정 작업 가능)
 
 ### 2. 번역 시작
 `번역 시작` 버튼을 클릭하면 원본 문서를 읽어 제목을 기준으로 문단 단위로 청킹하고, 각 문단을 순차적으로 번역합니다.
