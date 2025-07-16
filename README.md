@@ -15,12 +15,7 @@ OpenAI API 키가 필요합니다. [OpenAI](https://platform.openai.com/)에서 
 
 ### 방법 1: .env 파일 사용 (권장)
 
-1. `.env.example` 파일을 `.env`로 복사:
-```bash
-cp .env.example .env
-```
-
-2. `.env` 파일을 편집하여 API 키를 입력:
+`.env` 파일을 편집하여 API 키를 입력:
 ```bash
 # .env 파일 내용
 OPENAI_API_KEY=your_actual_api_key_here
