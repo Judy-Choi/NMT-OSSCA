@@ -1,6 +1,12 @@
-# 기술 문서 번역기 (OpenAI)
+# 🤗 AI 기술 문서 번역기
 
-OpenAI API를 사용하여 영어 기술 문서를 한국어로 번역하는 도구입니다.
+> OpenAI API와 용어 사전(glossary)을 활용해 영어 AI 기술 문서를 정확하게 번역합니다.
+> 
+> Streamlit 기반 UI를 통해 번역 결과를 손쉽게 비교·수정할 수 있습니다.
+<br>
+
+<img width="1845" height="737" alt="image" src="https://github.com/user-attachments/assets/9766ece0-74db-4948-8184-75d45633ac48" />
+
 
 ## 🚀 설치
 
@@ -29,12 +35,14 @@ export OPENAI_API_KEY='your_api_key_here'
 
 ## 📖 사용법
 
-### 기본 사용법
+### 1. Streamlit UI 실행
 
 ```bash
 cd nmt_huggingface
 streamlit run translator.py
 ```
+
+<img width="1203" height="745" alt="image" src="https://github.com/user-attachments/assets/8a366f63-2065-4a84-a287-1157c951c4ae" />
 
 기본적으로 다음 파일들을 사용합니다:
 - 원본 문서: `source_docs/models.md`
@@ -42,9 +50,30 @@ streamlit run translator.py
 - 용어 사전(glossary) : `glossary/glossary.json`
 - 출력 파일: `output/models_ko.md`
 
-### 고급 사용법
+### 2. 번역 시작
+`번역 시작` 버튼을 클릭하면 원본 문서를 읽어 제목을 기준으로 문단 단위로 청킹하고, 각 문단을 순차적으로 번역합니다.
 
-Streamlit UI를 통해 파일 경로와 모델을 설정할 수 있습니다.
+용어 사전(glossary) 에 존재하는 단어는 파란색과 bold 로 표시됩니다.
+
+<img width="1803" height="745" alt="image" src="https://github.com/user-attachments/assets/f1cad706-9850-4638-a4b9-7038a615b6c9" />
+
+### 3. 번역 수정
+모든 문단의 번역이 완료되면 번역 결과 문단의 제목 우측마다 `수정` 버튼이 생성됩니다.
+`수정` 버튼을 클릭하면 번역 결과를 수정할 수 있습니다.
+
+<img width="1803" height="745" alt="image" src="https://github.com/user-attachments/assets/07e4dea9-9144-4cd7-9202-42521230ad7b" />
+<br>
+<br>
+수정을 마치면 `완료` 버튼을 클릭해 수정한 결과를 임시 저장합니다.
+<br>
+<br>
+<img width="1803" height="745" alt="image" src="https://github.com/user-attachments/assets/72ad6fe2-0b47-4c4f-bccc-8577e5dd7ae4" />
+
+
+### 4. 번역 및 수정 결과 저장
+번역 결과를 모두 확인하고 수정을 마쳤으면 페이지 맨 아래의 `수정된 내용 파일에 저장` 버튼을 클릭해 최종 결과물을 파일에 저장합니다.
+
+<img width="1803" height="745" alt="image" src="https://github.com/user-attachments/assets/87d17f1b-9b95-4d5f-a653-ab08e0185766" />
 
 ## 📁 프로젝트 구조
 
