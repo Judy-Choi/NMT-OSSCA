@@ -124,7 +124,8 @@ with st.sidebar:
     source_path = st.text_input("원본 문서", value="./source_docs/models.md")
     prompt_path = st.text_input("프롬프트 템플릿", value="./prompts/nmt.yaml")
     glossary_path = st.text_input("단어사전", value="./glossary/glossary.json")
-    output_path = st.text_input("번역 결과 저장 경로", value="./output/models_ko.md")
+    mt_path = st.text_input("번역 결과 저장 경로", value="./mt/models_ko.md")
+    mtpe_path = st.text_input("번역 수정 결과 저장 경로", value="./mtpe/models_ko.md")
 
     if st.button("번역 시작", type="primary"):
         st.session_state.show_progress_view = True
@@ -137,7 +138,7 @@ if st.session_state.show_progress_view:
 
     if not api_key:
         st.error("OpenAI API 키를 입력해주세요.")
-    elif not all([source_path, prompt_path, glossary_path, output_path]):
+    elif not all([source_path, prompt_path, glossary_path, mt_path]):
         st.error("모든 파일 경로를 올바르게 입력해주세요.")
     else:
         try:
@@ -220,7 +221,23 @@ if st.session_state.show_progress_view:
                         st.session_state[f"edited_chunk_{i}"] = final_chunk
 
             st.session_state.translation_done = True
-            st.success("🎉 번역이 완료되었습니다! 잠시 후 수정 모드로 전환됩니다.")
+            # st.success("🎉 번역이 완료되었습니다! 잠시 후 수정 모드로 전환됩니다.")
+
+            # Save the completed translation result to mt_path
+            final_chunks = []
+            for i in range(len(source_chunks)):
+                edited_content = st.session_state.get(f"edited_chunk_{i}", "")
+                final_chunks.append(edited_content)
+            
+            final_content = "\n".join(final_chunks)
+            
+            output_dir = Path(mt_path).parent
+            output_dir.mkdir(parents=True, exist_ok=True)
+            with open(mt_path, 'w', encoding='utf-8') as f:
+                f.write(final_content)
+            
+            st.success(f"✅ 번역이 완료되어 다음 파일에 저장되었습니다: {mt_path}")
+
             import time
             time.sleep(2)
             st.rerun()
@@ -298,7 +315,7 @@ if st.session_state.translation_done:
                         highlighted_target = highlight_terms(translated_text, target_terms)
                         st.markdown(highlighted_target, unsafe_allow_html=True)
 
-        st.markdown("---")
+        # Change the output path for the '수정된 내용 파일에 저장' button
         if st.button("수정된 내용 파일에 저장", type="primary"):
             final_chunks = []
             for i in range(len(source_chunks)):
@@ -307,12 +324,12 @@ if st.session_state.translation_done:
             
             final_content = "\n".join(final_chunks)
             
-            output_dir = Path(output_path).parent
+            output_dir = Path(mtpe_path).parent
             output_dir.mkdir(parents=True, exist_ok=True)
-            with open(output_path, 'w', encoding='utf-8') as f:
+            with open(mtpe_path, 'w', encoding='utf-8') as f:
                 f.write(final_content)
             
-            st.success(f"✅ 수정된 내용이 다음 파일에 저장되었습니다: {output_path}")
+            st.success(f"✅ 수정된 내용이 다음 파일에 저장되었습니다: {mtpe_path}")
 
     except Exception as e:
         st.error(f"결과를 표시하는 중 오류가 발생했습니다: {e}") 

@@ -5,7 +5,8 @@
 > Streamlit 기반 UI를 통해 번역 결과를 손쉽게 비교·수정할 수 있습니다.
 <br>
 
-<img width="1845" height="737" alt="image" src="https://github.com/user-attachments/assets/9766ece0-74db-4948-8184-75d45633ac48" />
+<img width="1742" height="746" alt="image" src="https://github.com/user-attachments/assets/b9c28124-c878-4c7a-9195-58664d30f5e0" />
+
 
 
 ## 🚀 설치
@@ -42,38 +43,46 @@ cd nmt_huggingface
 streamlit run translator.py
 ```
 
-<img width="1203" height="745" alt="image" src="https://github.com/user-attachments/assets/8a366f63-2065-4a84-a287-1157c951c4ae" />
+<img width="1047" height="746" alt="image" src="https://github.com/user-attachments/assets/35e59a13-d9ed-4998-9f31-073244053ace" />
+
 
 기본적으로 다음 파일들을 사용합니다:
 - 원본 문서: `source_docs/models.md`
 - 프롬프트: `prompts/nmt.yaml`
 - 용어 사전(glossary) : `glossary/glossary.json`
-- 출력 파일: `output/models_ko.md`
+- 기계번역 결과 저장 파일: `./mt/models_ko.md`
+- 기계번역 사후교정 저장 파일: `./mtpe/models_ko.md`
 
 ### 2. 번역 시작
 `번역 시작` 버튼을 클릭하면 원본 문서를 읽어 제목을 기준으로 문단 단위로 청킹하고, 각 문단을 순차적으로 번역합니다.
 
 용어 사전(glossary) 에 존재하는 단어는 파란색과 bold 로 표시됩니다.
 
-<img width="1803" height="745" alt="image" src="https://github.com/user-attachments/assets/f1cad706-9850-4638-a4b9-7038a615b6c9" />
+<img width="1742" height="746" alt="image" src="https://github.com/user-attachments/assets/1fe140ad-62e5-46f9-b6bd-c0934bca8268" />
+<br>
+
+번역이 모두 완료된 후 결과는 `./mt/models_ko.md` 파일에 저장됩니다.
 
 ### 3. 번역 수정
 모든 문단의 번역이 완료되면 번역 결과 문단의 제목 우측마다 `수정` 버튼이 생성됩니다.
+
 `수정` 버튼을 클릭하면 번역 결과를 수정할 수 있습니다.
 
-<img width="1803" height="745" alt="image" src="https://github.com/user-attachments/assets/07e4dea9-9144-4cd7-9202-42521230ad7b" />
+<img width="1742" height="746" alt="image" src="https://github.com/user-attachments/assets/1d54832e-10e8-4530-a351-4181a43af32c" />
 <br>
 <br>
+
 수정을 마치면 `완료` 버튼을 클릭해 수정한 결과를 임시 저장합니다.
-<br>
-<br>
-<img width="1803" height="745" alt="image" src="https://github.com/user-attachments/assets/72ad6fe2-0b47-4c4f-bccc-8577e5dd7ae4" />
+
+<img width="1742" height="746" alt="image" src="https://github.com/user-attachments/assets/4cc42934-bf0b-42df-98a1-667f54b72c43" />
+
 
 
 ### 4. 번역 및 수정 결과 저장
-번역 결과를 모두 확인하고 수정을 마쳤으면 페이지 맨 아래의 `수정된 내용 파일에 저장` 버튼을 클릭해 최종 결과물을 파일에 저장합니다.
+번역 결과를 모두 확인하고 수정을 마쳤으면 페이지 맨 아래의 `수정된 내용 파일에 저장` 버튼을 클릭해 최종 결과물을 `./mtpe/models_ko.md` 파일에 저장합니다.
 
-<img width="1803" height="745" alt="image" src="https://github.com/user-attachments/assets/87d17f1b-9b95-4d5f-a653-ab08e0185766" />
+<img width="1742" height="746" alt="image" src="https://github.com/user-attachments/assets/10abd7ab-c4e4-45c1-bcb3-b5bee2abe2ed" />
+
 
 ## 📁 프로젝트 구조
 
@@ -91,8 +100,10 @@ nmt_huggingface/
 │   └── nmt.yaml          # 번역 프롬프트 템플릿 (따로 제공)
 ├── source_docs/
 │   └── models.md         # 번역할 원본 문서
-└── output/
-    └── models_ko.md      # 번역 결과 (생성됨)
+├── mt/
+│   └── models_ko.md      # 번역 결과 (생성됨)
+└── mtpe/
+    └── models_ko.md      # 번역 수정 결과 (생성됨)
 ```
 
 ## 🔧 프롬프트 템플릿 커스터마이징
