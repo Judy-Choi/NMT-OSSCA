@@ -6,9 +6,10 @@ import json
 import os
 import re
 from pathlib import Path
+from litellm import LiteLLM
 import streamlit as st
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
+from langchain_litellm import ChatLiteLLM
 
 # --- Core Logic Functions ---
 
@@ -110,15 +111,26 @@ with st.sidebar:
     
     # .env 파일 로드
     load_dotenv()
+
+    # claude-opus-4-20250514, gpt-4o 등 사용 가능
+    # 추후 gemini 추가 예정
+    model_name = st.text_input("모델 이름", value="claude-opus-4-20250514")
     
+    # Load appropriate API key based on model name
+    if 'gpt' in model_name:
+        api_key = os.getenv("OPENAI_API_KEY", "")
+    elif 'claude' in model_name:
+        api_key = os.getenv("ANTHROPIC_API_KEY", "")
+    else:
+        api_key = ""  # Default to empty if no matching model name
+
     api_key = st.text_input(
-        "OpenAI API Key", 
-        value=os.getenv("OPENAI_API_KEY", ""), 
+        "API Key", 
+        value=api_key, 
         type="password",
-        help="API 키가 없으면 https://platform.openai.com/api-keys 에서 발급받으세요."
-    )
-    
-    model_name = st.text_input("모델 이름", value="gpt-4o")
+        help="API 키가 없으면 해당 플랫폼에서 발급받으세요."
+    )  
+
     
     st.subheader("파일 경로")
     source_path = st.text_input("원본 문서", value="./source_docs/models.md")
@@ -137,13 +149,18 @@ if st.session_state.show_progress_view:
     st.session_state.show_progress_view = False  # 한번만 실행되도록 재설정
 
     if not api_key:
-        st.error("OpenAI API 키를 입력해주세요.")
+        st.error("API 키를 입력해주세요.")
     elif not all([source_path, prompt_path, glossary_path, mt_path]):
         st.error("모든 파일 경로를 올바르게 입력해주세요.")
     else:
         try:
             # 1. 초기화
-            llm = ChatOpenAI(model=model_name, temperature=0.1, openai_api_key=api_key)
+            # llm = ChatOpenAI(model=model_name, temperature=0.1, openai_api_key=api_key)
+            llm = ChatLiteLLM(
+                model=model_name,
+                temperature=0.1,
+                api_key=api_key
+            )
             base_prompt = load_prompt_template(prompt_path)
             glossary_data = load_glossary(glossary_path)
             final_prompt_template = prepare_final_prompt(base_prompt, glossary_data)

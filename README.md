@@ -1,6 +1,8 @@
 # 🤗 AI 기술 문서 번역기
 
-> OpenAI API와 용어 사전(glossary)을 활용해 영어 AI 기술 문서를 정확하게 번역합니다.
+> LLM API와 용어 사전(glossary)을 활용해 영어 AI 기술 문서를 정확하게 번역합니다.
+>
+> * 2025.07.17 기준 OpenAI(GPT) 와 Anthropic(Claude) 모델을 지원합니다.
 > 
 > Streamlit 기반 UI를 통해 번역 결과를 손쉽게 비교·수정할 수 있습니다.
 <br>
@@ -18,7 +20,7 @@ uv pip install -r requirements.txt
 
 ## 🔑 API 키 설정
 
-OpenAI API 키가 필요합니다. [OpenAI](https://platform.openai.com/)에서 계정을 생성하고 API 키를 발급받으세요.
+API 키가 필요합니다. [OpenAI](https://platform.openai.com/) 또는 [Anthropic](https://www.anthropic.com/) 에서 계정을 생성하고 API 키를 발급받으세요.
 
 ### 방법 1: .env 파일 사용 (권장)
 
@@ -26,12 +28,16 @@ OpenAI API 키가 필요합니다. [OpenAI](https://platform.openai.com/)에서 
 ```bash
 # .env 파일 내용
 OPENAI_API_KEY=your_actual_api_key_here
+또는
+ANTHROPIC_API_KEY=your_actual_api_key_here
+
 ```
 
 ### 방법 2: 환경변수로 설정
 
 ```bash
 export OPENAI_API_KEY='your_api_key_here'
+export ANTHROPIC_API_KEY=your_actual_api_key_here
 ```
 
 ## 📖 사용법
