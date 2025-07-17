@@ -54,7 +54,7 @@ def split_markdown_by_headings(markdown_content: str) -> list[str]:
         chunks.append("\n".join(current_chunk_lines))
     return chunks
 
-def load_and_display_existing_translation(file_path, source_path, glossary_path, result_title, save_path):
+def load_and_display_existing_translation(source_path, target_path, glossary_path, result_title, save_path):
     """기존 번역 파일을 로드하고 표시하는 공통 함수"""
     try:
         # 원본 문서 로드 및 분할
@@ -65,7 +65,7 @@ def load_and_display_existing_translation(file_path, source_path, glossary_path,
         st.session_state.source_chunks = source_chunks
         
         # 번역 파일 로드 및 분할
-        with open(file_path, 'r', encoding='utf-8') as f:
+        with open(target_path, 'r', encoding='utf-8') as f:
             target_content = f.read()
         
         target_chunks = split_markdown_by_headings(target_content)

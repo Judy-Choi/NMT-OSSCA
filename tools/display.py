@@ -110,4 +110,6 @@ def display_translation_results(source_chunks, target_chunks, source_terms, targ
         with open(save_path, 'w', encoding='utf-8') as f:
             f.write(final_content)
         
+        st.session_state.mtpe_exist = True
+        
         st.success(f"✅ 수정된 내용이 다음 파일에 저장되었습니다: {save_path}") 

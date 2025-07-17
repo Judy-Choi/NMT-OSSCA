@@ -90,6 +90,7 @@ if st.session_state.show_progress_view:
         elif Path(mt_path).exists():
             st.success(f"✅ 기계번역 결과 파일이 이미 존재하여 불러옵니다: {mt_path}")
             st.session_state.mt_exist = True
+            st.session_state.mtpe_exist = False
             time.sleep(2)
             st.rerun()
 
@@ -171,6 +172,7 @@ if st.session_state.show_progress_view:
                     f.write(final_content)
                 
                 st.success(f"✅ 번역이 완료되어 다음 파일에 저장되었습니다: {mt_path}")
+                st.session_state.mt_exist = True
 
                 time.sleep(2)
                 st.rerun()
@@ -181,7 +183,7 @@ if st.session_state.show_progress_view:
                 st.error(f"오류가 발생했습니다: {e}")
 
 if st.session_state.mtpe_exist:
-    load_and_display_existing_translation(mtpe_path, source_path, glossary_path, "기계번역 사후교정 결과", mtpe_path)
+    load_and_display_existing_translation(source_path, mtpe_path, glossary_path, "기계번역 사후교정 결과", mtpe_path)
 
-if st.session_state.mt_exist:
-    load_and_display_existing_translation(mt_path, source_path, glossary_path, "기계번역 결과", mt_path) 
+elif st.session_state.mt_exist:
+    load_and_display_existing_translation(source_path, mt_path, glossary_path, "기계번역 결과", mtpe_path) 
