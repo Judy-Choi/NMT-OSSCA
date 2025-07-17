@@ -16,6 +16,8 @@
 ```bash
 # 의존성 설치
 uv pip install -r requirements.txt
+# 또는
+uv sync
 ```
 
 ## 🔑 API 키 설정
